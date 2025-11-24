@@ -1,0 +1,67 @@
+2025-01-14T08:15:20Z 10.1.2.40 34.117.237.239 GET https://github.com/openai Mozilla/5.0 userA 200 5120
+2025-01-14T08:15:25Z 10.1.2.40 34.117.237.239 GET https://github.com/openai/docs Mozilla/5.0 userA 200 6400
+2025-01-14T08:15:28Z 10.1.2.40 34.117.237.239 GET https://github.com/openai/api Mozilla/5.0 userA 200 6890
+2025-01-14T08:15:29Z 10.1.2.40 34.117.237.239 GET https://github.com/openai/api Mozilla/5.0 userA 200 6895
+
+2025-01-14T08:16:20Z 10.1.2.40 34.117.237.239 GET https://github.com/openai Mozilla/5.0 userB 200 10124
+2025-01-14T08:17:42Z 10.1.2.40 52.95.110.23 GET https://aws.amazon.com S3Sync/1.0 userA 200 31200
+2025-01-14T08:18:04Z 10.1.2.40 52.95.110.23 PUT https://aws.amazon.com/upload S3Sync/1.0 userA 201 92000
+
+# Slightly suspicious: odd user agent
+2025-01-14T08:20:11Z 10.8.99.33 3.23.144.19 POST https://transfer.io/upload curl/7.77.0 userD 200 2457600
+
+# Obvious threat: scan pattern
+2025-01-14T08:21:02Z 10.8.99.33 10.0.0.5 GET http://intranet.local/admin/login Mozilla/5.0 attacker 401 1024
+2025-01-14T08:21:03Z 10.8.99.33 10.0.0.5 GET http://intranet.local/admin/config Mozilla/5.0 attacker 401 1024
+2025-01-14T08:21:05Z 10.8.99.33 10.0.0.5 GET http://intranet.local/admin/debug Mozilla/5.0 attacker 401 1024
+
+# Very large transfer (possible exfiltration)
+2025-01-14T08:22:18Z 10.2.0.18 8.8.8.8 PUT https://cloud-storage.example/upload Mozilla/5.0 userX 200 524288000
+
+# Authentication logs (different format)
+Jan 14 08:23:10 server1 sshd[2345]: Failed password for invalid user guest from 193.22.33.10 port 53722 ssh2
+Jan 14 08:23:14 server1 sshd[2345]: Failed password for root from 193.22.33.10 port 53722 ssh2
+Jan 14 08:23:20 server1 sshd[2345]: Accepted password for admin from 10.1.2.40 port 44211 ssh2
+
+# Weird method (rule-based anomaly)
+2025-01-14T08:25:15Z 10.4.3.20 44.12.10.5 BREW https://unknown.example Mozilla/5.0 userC 200 2048
+
+# Browser impersonation
+2025-01-14T08:26:44Z 10.4.3.20 44.12.10.5 GET https://unknown.example Python-urllib/3.8 userC 200 3000
+
+# Normal traffic
+2025-01-14T08:30:01Z 10.9.1.10 142.250.72.238 GET https://google.com Chrome/122.0 userE 200 2100
+2025-01-14T08:30:05Z 10.9.1.10 142.250.72.238 GET https://google.com/search Chrome/122.0 userE 200 2300
+2025-01-14T08:30:08Z 10.9.1.10 142.250.72.238 GET https://google.com/maps Chrome/122.0 userE 200 2480
+
+# Suspicious LLM-like scraping
+2025-01-14T08:31:55Z 10.10.20.44 151.101.1.69 GET https://docs.python.org/3/library/requests.html python-requests/2.31 collectorBot 200 119040
+2025-01-14T08:31:57Z 10.10.20.44 151.101.1.69 GET https://docs.python.org/3/reference/lexical_analysis.html python-requests/2.31 collectorBot 200 98000
+2025-01-14T08:32:00Z 10.10.20.44 151.101.1.69 GET https://docs.python.org/3/howto/logging.html python-requests/2.31 collectorBot 200 102000
+
+# Strange URL anomaly
+2025-01-14T08:33:11Z 10.8.99.33 3.23.144.19 GET https://transfer.io/upload?token=../../etc/passwd Mozilla/5.0 userD 200 12000
+
+# Malformed log (forces AI parser fallback)
+MALFORMED EVENT WITHOUT FIELDS
+USER CONNECT host=10.8.99.33 ua=curl action=upload size=51200
+
+# Invisible exfiltration attempt hidden as image
+2025-01-14T08:35:55Z 10.5.11.99 104.26.10.78 POST https://cdn-files.example/image.jpg Mozilla/5.0 userZ 200 104857600
+
+# Very short weird logs
+10.5.5.5 GET /secret 500
+ERROR missing timestamp src_ip=10.8.99.33
+
+# Normal behavior
+2025-01-14T08:38:01Z 10.0.0.12 142.251.33.174 GET https://youtube.com Chrome/122 userAA 200 7200
+2025-01-14T08:38:10Z 10.0.0.12 142.251.33.174 GET https://youtube.com/watch?v=xyz Chrome/122 userAA 200 7500
+
+# Suspicious repeated failures (bruteforce pattern)
+2025-01-14T08:39:40Z 10.8.99.33 10.0.0.5 POST http://intranet.local/login Mozilla/5.0 attacker 401 900
+2025-01-14T08:39:41Z 10.8.99.33 10.0.0.5 POST http://intranet.local/login Mozilla/5.0 attacker 401 900
+2025-01-14T08:39:43Z 10.8.99.33 10.0.0.5 POST http://intranet.local/login Mozilla/5.0 attacker 401 900
+
+# Outbound C2 beacon-like traffic
+2025-01-14T08:41:20Z 10.7.3.90 185.199.108.153 POST https://pastebin.com/raw/random Mozilla/5.0 unknown 200 1300
+2025-01-14T08:41:25Z 10.7.3.90 185.199.108.153 POST https://pastebin.com/raw/random Mozilla/5.0 unknown 200 1300
