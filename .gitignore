@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Testing
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# Node.js
+node_modules/
+.next/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Uploads
+uploads/
+/data/uploads/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Validation tools (optional - uncomment if you don't want to track these)
+Makefile
+VALIDATION_QUICK_REF.md
+VALIDATION_README.md
+check_python_syntax.py
+docker-manage.ps1
+lint_check.py
+pre_build_check.py
+validate.ps1
